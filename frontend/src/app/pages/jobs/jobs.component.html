@@ -1,0 +1,30 @@
+<div class="min-h-screen bg-zinc-950 text-white">
+
+    <div class="max-w-7xl mx-auto px-6 py-10">
+
+        <div class="mb-10">
+
+            <h1 class="text-5xl font-black">
+                LA Jobs AI
+            </h1>
+
+            <p class="text-zinc-400 mt-3">
+                Dashboard inteligente de vagas com IA
+            </p>
+
+        </div>
+
+        <div
+            class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
+        >
+
+            <app-job-card
+                *ngFor="let job of jobs"
+                [job]="job"
+            />
+
+        </div>
+
+    </div>
+
+</div>

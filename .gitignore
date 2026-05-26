@@ -1,0 +1,25 @@
+# Node
+node_modules/
+dist/
+
+# Angular
+.angular/
+.cache/
+
+# Laravel
+vendor/
+.env
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Ollama/Claude
+.claude/cache/
