@@ -1,0 +1,116 @@
+/* Sidebar Component - Estilos Customizados */
+
+:host {
+  display: block;
+}
+
+/* Estilo do range input (slider) */
+::ng-deep input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 5px;
+  background: linear-gradient(to right, rgb(59, 130, 246), rgb(168, 85, 247));
+  outline: none;
+
+  &::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease-out;
+
+    &:hover {
+      transform: scale(1.2);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    }
+  }
+
+  &::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease-out;
+
+    &:hover {
+      transform: scale(1.2);
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+    }
+  }
+}
+
+/* Transições suaves para checkboxes */
+::ng-deep input[type="checkbox"] {
+  transition: all 0.2s ease-out;
+  cursor: pointer;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:checked {
+    animation: checkbox-check 0.3s ease-out;
+  }
+}
+
+@keyframes checkbox-check {
+  0% {
+    transform: scale(0.8);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Efeito de hover nos labels */
+::ng-deep label {
+  transition: all 0.2s ease-out;
+
+  &:hover {
+    transform: translateX(4px);
+  }
+}
+
+/* Animação de divisor */
+@keyframes divider-glow {
+  0% {
+    background: linear-gradient(to right, transparent, rgba(113, 113, 122, 0.5), transparent);
+  }
+  50% {
+    background: linear-gradient(to right, transparent, rgba(59, 130, 246, 0.3), transparent);
+  }
+  100% {
+    background: linear-gradient(to right, transparent, rgba(113, 113, 122, 0.5), transparent);
+  }
+}
+
+::ng-deep .h-px {
+  animation: divider-glow 3s ease-in-out infinite;
+}
+
+/* Responsividade para mobile */
+@media (max-width: 1024px) {
+  :host {
+    ::ng-deep aside {
+      width: 100%;
+      max-width: 280px;
+    }
+  }
+}
+
+/* Efeito de scroll suave */
+::ng-deep .scrollbar-thin {
+  scroll-behavior: smooth;
+}

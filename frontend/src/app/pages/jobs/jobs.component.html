@@ -1,30 +1,46 @@
 <div class="min-h-screen bg-zinc-950 text-white">
+  <!-- Gradiente sutil de fundo -->
+  <div class="fixed inset-0 bg-gradient-to-br from-zinc-950 via-zinc-950 to-blue-950/10 pointer-events-none"></div>
 
-    <div class="max-w-7xl mx-auto px-6 py-10">
+  <!-- Sidebar -->
+  <app-sidebar
+    (filtersApplied)="onFiltersApplied($event)"
+    (sidebarClosed)="onSidebarClosed()"
+  ></app-sidebar>
 
-        <div class="mb-10">
-
-            <h1 class="text-5xl font-black">
-                LA Jobs AI
-            </h1>
-
-            <p class="text-zinc-400 mt-3">
-                Dashboard inteligente de vagas com IA
-            </p>
-
-        </div>
-
-        <div
-            class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
-        >
-
-            <app-job-card
-                *ngFor="let job of jobs"
-                [job]="job"
-            />
-
-        </div>
-
+  <!-- Container Principal com margem lateral para desktop -->
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16 lg:ml-64">
+    <!-- Header com Título e Descrição -->
+    <div class="mb-12 lg:mb-16">
+      <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black text-white leading-tight">
+        LA Jobs AI
+      </h1>
+      <p class="text-lg sm:text-xl text-zinc-400 mt-3 max-w-2xl">
+        Dashboard inteligente de vagas com IA. Encontre as melhores oportunidades de trabalho alinhadas ao seu perfil.
+      </p>
     </div>
 
+    <!-- Grid de Vagas com Responsividade Mobile-First -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+      <app-job-card
+        *ngFor="let job of jobs; let i = index"
+        [job]="job"
+        [attr.data-job-id]="job.id"
+        [@cardStagger]="i"
+      />
+    </div>
+
+    <!-- Estado Vazio (quando não há vagas) -->
+    <div *ngIf="jobs.length === 0" class="flex flex-col items-center justify-center py-20">
+      <div class="text-center">
+        <div class="w-16 h-16 rounded-full bg-zinc-800/50 flex items-center justify-center mx-auto mb-4">
+          <svg class="w-8 h-8 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+        <h3 class="text-xl font-semibold text-zinc-300 mb-2">Nenhuma vaga encontrada</h3>
+        <p class="text-zinc-400">Tente ajustar seus filtros ou volte mais tarde.</p>
+      </div>
+    </div>
+  </div>
 </div>

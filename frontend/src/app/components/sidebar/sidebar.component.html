@@ -1,1 +1,250 @@
-<p>sidebar works!</p>
+<!-- Sidebar Lateral com Filtros -->
+<aside
+  class="fixed left-0 top-16 bottom-0 w-64 glass-md border-r border-white/5 overflow-y-auto scrollbar-thin z-40 hidden lg:block"
+  [@sidebarEnter]
+>
+  <div class="p-6 space-y-8">
+    <!-- Seção: Filtros de Seniority -->
+    <div class="space-y-3">
+      <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-400">
+        Nível de Experiência
+      </h3>
+      <div class="space-y-2">
+        <label class="flex items-center gap-3 cursor-pointer group">
+          <input
+            type="checkbox"
+            class="w-4 h-4 rounded border-zinc-600 bg-zinc-800 text-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-offset-zinc-950 transition-colors"
+            (change)="onSeniorityChange('Junior')"
+          />
+          <span class="text-sm text-zinc-300 group-hover:text-white transition-colors">
+            Junior
+          </span>
+        </label>
+        <label class="flex items-center gap-3 cursor-pointer group">
+          <input
+            type="checkbox"
+            class="w-4 h-4 rounded border-zinc-600 bg-zinc-800 text-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-offset-zinc-950 transition-colors"
+            (change)="onSeniorityChange('Pleno')"
+          />
+          <span class="text-sm text-zinc-300 group-hover:text-white transition-colors">
+            Pleno
+          </span>
+        </label>
+        <label class="flex items-center gap-3 cursor-pointer group">
+          <input
+            type="checkbox"
+            class="w-4 h-4 rounded border-zinc-600 bg-zinc-800 text-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-offset-zinc-950 transition-colors"
+            (change)="onSeniorityChange('Sênior')"
+          />
+          <span class="text-sm text-zinc-300 group-hover:text-white transition-colors">
+            Sênior
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Divisor -->
+    <div class="h-px bg-gradient-to-r from-transparent via-zinc-700 to-transparent"></div>
+
+    <!-- Seção: Tipo de Trabalho -->
+    <div class="space-y-3">
+      <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-400">
+        Tipo de Trabalho
+      </h3>
+      <div class="space-y-2">
+        <label class="flex items-center gap-3 cursor-pointer group">
+          <input
+            type="checkbox"
+            class="w-4 h-4 rounded border-zinc-600 bg-zinc-800 text-emerald-500 focus:ring-2 focus:ring-emerald-500 focus:ring-offset-zinc-950 transition-colors"
+            (change)="onRemoteChange(true)"
+          />
+          <span class="text-sm text-zinc-300 group-hover:text-white transition-colors">
+            🌐 Remoto
+          </span>
+        </label>
+        <label class="flex items-center gap-3 cursor-pointer group">
+          <input
+            type="checkbox"
+            class="w-4 h-4 rounded border-zinc-600 bg-zinc-800 text-orange-500 focus:ring-2 focus:ring-orange-500 focus:ring-offset-zinc-950 transition-colors"
+            (change)="onRemoteChange(false)"
+          />
+          <span class="text-sm text-zinc-300 group-hover:text-white transition-colors">
+            📈 Presencial
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Divisor -->
+    <div class="h-px bg-gradient-to-r from-transparent via-zinc-700 to-transparent"></div>
+
+    <!-- Seção: Match Score Mínimo -->
+    <div class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-400">
+          Match Mínimo
+        </h3>
+        <span class="text-xs font-semibold text-blue-400">
+          {{ minMatchScore }}%
+        </span>
+      </div>
+      <input
+        type="range"
+        min="0"
+        max="100"
+        [value]="minMatchScore"
+        (change)="onMatchScoreChange($event)"
+        class="w-full h-2 bg-zinc-800 rounded-full appearance-none cursor-pointer accent-blue-500"
+      />
+    </div>
+
+    <!-- Divisor -->
+    <div class="h-px bg-gradient-to-r from-transparent via-zinc-700 to-transparent"></div>
+
+    <!-- Botões de Ação -->
+    <div class="flex gap-2 pt-4">
+      <button
+        class="flex-1 px-3 py-2 rounded-lg text-sm font-medium bg-zinc-800/50 text-zinc-300 hover:bg-zinc-800 hover:text-white transition-colors focus-ring"
+        (click)="resetFilters()"
+      >
+        Limpar
+      </button>
+      <button
+        class="flex-1 px-3 py-2 rounded-lg text-sm font-medium bg-blue-600 text-white hover:bg-blue-500 active:bg-blue-700 transition-colors focus-ring shadow-md"
+        (click)="applyFilters()"
+      >
+        Aplicar
+      </button>
+    </div>
+  </div>
+</aside>
+
+<!-- Overlay para mobile (quando sidebar está aberta) -->
+<div
+  *ngIf="sidebarOpen"
+  class="fixed inset-0 bg-black/50 z-30 lg:hidden"
+  (click)="closeSidebar()"
+  [@overlayEnter]
+></div>
+
+<!-- Sidebar Mobile (drawer) -->
+<aside
+  *ngIf="sidebarOpen"
+  class="fixed left-0 top-16 bottom-0 w-64 glass-md border-r border-white/5 overflow-y-auto scrollbar-thin z-40 lg:hidden"
+  [@sidebarEnter]
+>
+  <div class="p-6 space-y-8">
+    <!-- Seção: Filtros de Seniority -->
+    <div class="space-y-3">
+      <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-400">
+        Nível de Experiência
+      </h3>
+      <div class="space-y-2">
+        <label class="flex items-center gap-3 cursor-pointer group">
+          <input
+            type="checkbox"
+            class="w-4 h-4 rounded border-zinc-600 bg-zinc-800 text-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-offset-zinc-950 transition-colors"
+            (change)="onSeniorityChange('Junior')"
+          />
+          <span class="text-sm text-zinc-300 group-hover:text-white transition-colors">
+            Junior
+          </span>
+        </label>
+        <label class="flex items-center gap-3 cursor-pointer group">
+          <input
+            type="checkbox"
+            class="w-4 h-4 rounded border-zinc-600 bg-zinc-800 text-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-offset-zinc-950 transition-colors"
+            (change)="onSeniorityChange('Pleno')"
+          />
+          <span class="text-sm text-zinc-300 group-hover:text-white transition-colors">
+            Pleno
+          </span>
+        </label>
+        <label class="flex items-center gap-3 cursor-pointer group">
+          <input
+            type="checkbox"
+            class="w-4 h-4 rounded border-zinc-600 bg-zinc-800 text-blue-500 focus:ring-2 focus:ring-blue-500 focus:ring-offset-zinc-950 transition-colors"
+            (change)="onSeniorityChange('Sênior')"
+          />
+          <span class="text-sm text-zinc-300 group-hover:text-white transition-colors">
+            Sênior
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Divisor -->
+    <div class="h-px bg-gradient-to-r from-transparent via-zinc-700 to-transparent"></div>
+
+    <!-- Seção: Tipo de Trabalho -->
+    <div class="space-y-3">
+      <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-400">
+        Tipo de Trabalho
+      </h3>
+      <div class="space-y-2">
+        <label class="flex items-center gap-3 cursor-pointer group">
+          <input
+            type="checkbox"
+            class="w-4 h-4 rounded border-zinc-600 bg-zinc-800 text-emerald-500 focus:ring-2 focus:ring-emerald-500 focus:ring-offset-zinc-950 transition-colors"
+            (change)="onRemoteChange(true)"
+          />
+          <span class="text-sm text-zinc-300 group-hover:text-white transition-colors">
+            🌐 Remoto
+          </span>
+        </label>
+        <label class="flex items-center gap-3 cursor-pointer group">
+          <input
+            type="checkbox"
+            class="w-4 h-4 rounded border-zinc-600 bg-zinc-800 text-orange-500 focus:ring-2 focus:ring-orange-500 focus:ring-offset-zinc-950 transition-colors"
+            (change)="onRemoteChange(false)"
+          />
+          <span class="text-sm text-zinc-300 group-hover:text-white transition-colors">
+            📈 Presencial
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Divisor -->
+    <div class="h-px bg-gradient-to-r from-transparent via-zinc-700 to-transparent"></div>
+
+    <!-- Seção: Match Score Mínimo -->
+    <div class="space-y-3">
+      <div class="flex items-center justify-between">
+        <h3 class="text-xs font-bold uppercase tracking-wider text-zinc-400">
+          Match Mínimo
+        </h3>
+        <span class="text-xs font-semibold text-blue-400">
+          {{ minMatchScore }}%
+        </span>
+      </div>
+      <input
+        type="range"
+        min="0"
+        max="100"
+        [value]="minMatchScore"
+        (change)="onMatchScoreChange($event)"
+        class="w-full h-2 bg-zinc-800 rounded-full appearance-none cursor-pointer accent-blue-500"
+      />
+    </div>
+
+    <!-- Divisor -->
+    <div class="h-px bg-gradient-to-r from-transparent via-zinc-700 to-transparent"></div>
+
+    <!-- Botões de Ação -->
+    <div class="flex gap-2 pt-4">
+      <button
+        class="flex-1 px-3 py-2 rounded-lg text-sm font-medium bg-zinc-800/50 text-zinc-300 hover:bg-zinc-800 hover:text-white transition-colors focus-ring"
+        (click)="resetFilters()"
+      >
+        Limpar
+      </button>
+      <button
+        class="flex-1 px-3 py-2 rounded-lg text-sm font-medium bg-blue-600 text-white hover:bg-blue-500 active:bg-blue-700 transition-colors focus-ring shadow-md"
+        (click)="applyFilters()"
+      >
+        Aplicar
+      </button>
+    </div>
+  </div>
+</aside>
