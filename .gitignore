@@ -24,9 +24,6 @@ Thumbs.db
 # Ollama/Claude
 .claude/cache/
 
-# Docker | PostGres
-.docker-compose.yml
-
 # comandos de inicialização
 .start-dev.cmd
 .stop-dev.cmd
