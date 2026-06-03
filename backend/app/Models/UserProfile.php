@@ -10,12 +10,22 @@ class UserProfile extends Model
 
         'name',
         'email',
+
         'seniority',
+        'years_experience',
+
         'stack',
         'keywords',
+
+        'desired_roles',
+
         'english',
+
         'remote_only',
+
         'location',
+        'preferred_locations',
+
         'salary_expectation'
     ];
 
@@ -23,6 +33,10 @@ class UserProfile extends Model
 
         'stack' => 'array',
         'keywords' => 'array',
+
+        'desired_roles' => 'array',
+        'preferred_locations' => 'array',
+
         'english' => 'boolean',
         'remote_only' => 'boolean',
     ];

@@ -21,12 +21,23 @@ class TrackedJob extends Model
         'remote',
         'match_score',
         'ai_summary',
-        'ai_processed'
+        'ai_processed',
+
+        'strengths',
+        'weaknesses',
+        'match_reasons',
+        'recommendation'
     ];
 
     protected $casts = [
+
         'stack' => 'array',
         'keywords' => 'array',
+
+        'strengths' => 'array',
+        'weaknesses' => 'array',
+        'match_reasons' => 'array',
+
         'english_required' => 'boolean',
         'remote' => 'boolean',
         'ai_processed' => 'boolean',
