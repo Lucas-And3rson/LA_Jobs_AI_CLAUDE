@@ -15,18 +15,33 @@ class DocxResumeService
 
         $section->addText(
             $resume['name'] ?? '',
-            ['bold' => true, 'size' => 18]
+            [
+                'bold' => true,
+                'size' => 22
+            ],
+            [
+                'alignment' => 'center'
+            ]
         );
 
         $section->addText(
-            $resume['title'] ?? ''
+            $resume['title'] ?? '',
+            [
+                'size' => 12
+            ],
+            [
+                'alignment' => 'center'
+            ]
         );
 
         $section->addTextBreak();
 
         $section->addText(
-            'RESUMO',
-            ['bold' => true]
+            'RESUMO PROFISSIONAL',
+            [
+                'bold' => true,
+                'size' => 14
+            ]
         );
 
         $section->addText(
@@ -36,28 +51,38 @@ class DocxResumeService
         $section->addTextBreak();
 
         $section->addText(
-            'SKILLS',
-            ['bold' => true]
+            'COMPETÊNCIAS',
+            [
+                'bold' => true,
+                'size' => 14
+            ]
         );
 
         foreach ($resume['skills'] ?? [] as $skill) {
 
-            $section->addText(
-                '• ' . $skill
+           $section->addListItem(
+                $skill,
+                0
             );
         }
 
         $section->addTextBreak();
 
         $section->addText(
-            'EXPERIÊNCIA',
-            ['bold' => true]
+            'EXPERIÊNCIA PROFISSIONAL',
+            [
+                'bold' => true,
+                'size' => 14
+            ]
         );
 
         foreach ($resume['experience'] ?? [] as $exp) {
 
             $section->addText(
-                $exp['title'] ?? ''
+                $exp['title'] ?? '',
+                [
+                    'bold' => true
+                ]
             );
 
             $section->addText(
@@ -69,13 +94,20 @@ class DocxResumeService
 
         $section->addText(
             'FORMAÇÃO',
-            ['bold' => true]
+            [
+                'bold' => true,
+                'size' => 14
+            ]
         );
+
 
         foreach ($resume['education'] ?? [] as $edu) {
 
-            $section->addText(
-                $edu['course'] ?? ''
+           $section->addText(
+                $edu['course'] ?? '',
+                [
+                    'bold' => true
+                ]
             );
 
             $section->addText(
@@ -83,12 +115,63 @@ class DocxResumeService
             );
         }
 
-        $filename =
-            storage_path(
-                'app/resumes/resume_' .
-                time() .
-                '.docx'
+        $section->addTextBreak();
+
+        $section->addText(
+            'IDIOMAS',
+            [
+                'bold' => true,
+                'size' => 14
+            ]
+        );
+
+        foreach ($resume['languages'] ?? [] as $language) {
+
+            $section->addListItem(
+                $language,
+                0
             );
+        }
+
+        $section->addTextBreak();
+
+        $section->addText(
+            'COMPATIBILIDADE ATS',
+            [
+                'bold' => true,
+                'size' => 14
+            ]
+        );
+
+        $section->addText(
+            ($resume['ats_score'] ?? 0) . '%'
+        );
+
+        $directory = storage_path('app/resumes');
+
+        if (!file_exists($directory)) {
+
+            mkdir(
+                $directory,
+                0777,
+                true
+            );
+        }
+
+        $fileName =
+            preg_replace(
+                '/[^A-Za-z0-9_-]/',
+                '_',
+                ($resume['name'] ?? 'resume')
+            )
+            . '_CV_' .
+            time()
+            . '.docx';
+
+        $filename =
+            $directory .
+            DIRECTORY_SEPARATOR .
+            $fileName;
 
         if (!file_exists(storage_path('app/resumes'))) {
 

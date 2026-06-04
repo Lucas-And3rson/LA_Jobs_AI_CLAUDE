@@ -42,4 +42,12 @@ class TrackedJob extends Model
         'remote' => 'boolean',
         'ai_processed' => 'boolean',
     ];
+
+    public function resumes()
+    {
+        return $this->hasMany(
+            GeneratedResume::class,
+            'tracked_job_id'
+        );
+    }
 }

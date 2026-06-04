@@ -117,6 +117,7 @@ class GroqService
             \"skills\": [],
             \"experience\": [],
             \"education\": [],
+            \"languages\": [],
             \"keywords\": [],
             \"ats_score\": 0
         }
@@ -143,6 +144,8 @@ class GroqService
         - summary deve ser otimizado para ATS.
         - experience deve manter apenas experiências existentes no currículo.
         - education deve manter apenas formações existentes.
+        - languages deve manter apenas idiomas existentes no currículo mestre.
+        - Nunca invente idiomas.
         - Retorne APENAS JSON válido.
         ";
 

@@ -4,6 +4,7 @@ import { trigger, transition, style, animate as ngAnimate, stagger, query } from
 import { animate } from 'motion';
 
 import { Job } from '../../models/job.model';
+import { JobsService } from '../../services/jobs.service';
 
 @Component({
   selector: 'app-job-card',
@@ -60,9 +61,12 @@ import { Job } from '../../models/job.model';
   ]
 })
 export class JobCardComponent implements OnInit {
+  private jobsService = inject(JobsService);
+  
   @Input() job!: Job;
 
   isExpanded = false;
+  isGeneratingATS = false;
 
   ngOnInit(): void {
     // Motion One será aplicado após a renderização do componente
@@ -82,6 +86,30 @@ export class JobCardComponent implements OnInit {
     } else {
       document.body.style.overflow = 'auto';
     }
+  }
+
+  /**
+   * Aciona a geração do currículo ATS
+   */
+  generateATS(event: Event): void {
+    event.stopPropagation();
+    if (this.isGeneratingATS) return;
+
+    this.isGeneratingATS = true;
+    
+    this.jobsService.generateATS(this.job.id).subscribe({
+      next: (response) => {
+        console.log('ATS Gerado com sucesso:', response);
+        this.isGeneratingATS = false;
+        // Aqui você poderia adicionar um toast de sucesso ou abrir o arquivo gerado
+        alert('Currículo ATS gerado com sucesso! Verifique a pasta de downloads do sistema.');
+      },
+      error: (err) => {
+        console.error('Erro ao gerar ATS:', err);
+        this.isGeneratingATS = false;
+        alert('Ocorreu um erro ao gerar o currículo ATS. Tente novamente.');
+      }
+    });
   }
 
   /**

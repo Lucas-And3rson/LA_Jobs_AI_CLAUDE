@@ -17,7 +17,13 @@ export class JobsService {
         'http://127.0.0.1:8000/api/tracked-jobs';
 
     getJobs(): Observable<Job[]> {
-
         return this.http.get<Job[]>(this.api);
+    }
+
+    /**
+     * Solicita a geração de um currículo ATS para uma vaga específica
+     */
+    generateATS(jobId: number): Observable<any> {
+        return this.http.post(`http://127.0.0.1:8000/api/jobs/${jobId}/generate-resume`, {});
     }
 }
